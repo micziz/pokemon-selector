@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { pokemons } from './store.js';
   import Pokemon from "./Pokemon.svelte";
-
   let pkm: any;
   let noMorePkm = false;
 
@@ -11,7 +10,24 @@
   pokemons.subscribe(value => {
 		pokemonsValue = value;
 	});
-  
+
+  function retriveItems(){
+      let element1 = localStorage.getItem('squadElmt1')
+      let element2 = localStorage.getItem('squadElmt2')
+      let element3 = localStorage.getItem('squadElmt3')
+      let element4 = localStorage.getItem('squadElmt4')
+      let element5 = localStorage.getItem('squadElmt5')
+      let element6 = localStorage.getItem('squadElmt6')
+      return [element1, element2, element3, element4, element5, element6]
+  }
+
+    let elemntArr = retriveItems()
+
+    elemntArr.forEach((element) => {
+      if (element != null){
+        pokemonsValue.push(element)
+      }
+    })
   
   
   function addPkmn(){
@@ -22,6 +38,25 @@
       pkmsCurrent.push(pkm)
       pokemons.set(pkmsCurrent)
     }
+  }
+
+  function removeItems(){
+    localStorage.removeItem('squadElmt1')
+    localStorage.removeItem('squadElmt2')
+    localStorage.removeItem('squadElmt3')
+    localStorage.removeItem('squadElmt4')
+    localStorage.removeItem('squadElmt5')
+    localStorage.removeItem('squadElmt6')
+  }
+
+  function saveSquad(){
+    removeItems()
+    let count = 1 
+    pkmsCurrent.forEach((element) => {
+      
+      localStorage.setItem(`squadElmt${count}`, element)
+      count++;
+    })
   }
 </script>
 
@@ -46,6 +81,18 @@
 {#if noMorePkm}
   <h1 id="noMrPkm">Non puoi inserire piu pokemon</h1>
 {/if}
+
+<div id="btn-save">
+  <button class="button is-primary is-light" on:click={saveSquad}>
+    Salva La tua Squadra!
+  </button>
+</div>
+
+<div id="btn-remove">
+  <button class="button is-primary is-light" on:click={removeItems}>
+    Cancella La tua squadra
+  </button>
+</div>
 
 <style>
   #form{
@@ -79,6 +126,20 @@
 
   #noMrPkm{
     text-align: center;
+    margin-top: 2rem;
+  }
+
+  #btn-save{
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    margin-top: 12rem;
+  }
+
+  #btn-remove{
+    display: flex;
+    justify-content: center;
+    align-items: center;  
     margin-top: 2rem;
   }
 </style>
