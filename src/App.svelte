@@ -33,7 +33,7 @@
   </div>
   
   <div id="form-btn">
-    <input type="submit" value="Inserisci">
+    <input type="submit" value="Inserisci" class="button is-primary is-light">
   </div>
   </form>
 
