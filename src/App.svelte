@@ -11,13 +11,20 @@
 		pokemonsValue = value;
 	});
 
+  let coustumName;
+  let hasSquad = localStorage.getItem('hasSquad')
+  if (hasSquad == "true"){
+    coustumName = prompt('Nome della squadra salvata')
   
-
-    let elemntArr = JSON.parse(localStorage.getItem('squad'))
-    
-    for (const key in elemntArr) {
-      pokemonsValue.push(elemntArr[key])
+    let elemntArr = JSON.parse(localStorage.getItem(coustumName))
+  
+    if ( elemntArr !== null ){
+      for (const key in elemntArr) {
+        pokemonsValue.push(elemntArr[key])
+      }
     }
+      
+  }
     
     
   
@@ -32,14 +39,20 @@
   }
 
   function saveSquad(){
-    localStorage.removeItem('squad')
-    let squadObj = {}
-    let count = 1 
-    pkmsCurrent.forEach((element) => {
-      squadObj[`squadElmt${count}`] = element
-      count++;
-    })
-    localStorage.setItem('squad', JSON.stringify(squadObj))
+    let squadName = window.prompt('Nome della squadra', 'squad')
+    if (squadName == null || squadName == "") {
+      alert('Prompt cancellato!')
+    } else {
+      localStorage.setItem('hasSquad', 'true')
+      localStorage.removeItem(coustumName)
+      let squadObj = {}
+      let count = 1 
+      pkmsCurrent.forEach((element) => {
+        squadObj[`squadElmt${count}`] = element
+        count++;
+      })
+      localStorage.setItem(squadName, JSON.stringify(squadObj))
+    }
   }
 </script>
 
@@ -73,7 +86,9 @@
 
 <div id="btn-remove">
   <button class="button is-primary is-light" on:click={() => {
-    localStorage.removeItem('squad')
+    let squadDel = prompt('Squadra da cancellare')
+    localStorage.removeItem(squadDel)
+    localStorage.setItem('hasSquad', "false")
   }}>
     Cancella La tua squadra
   </button>
