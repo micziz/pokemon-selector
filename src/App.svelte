@@ -11,24 +11,15 @@
 		pokemonsValue = value;
 	});
 
-  function retriveItems(){
-      let element1 = localStorage.getItem('squadElmt1')
-      let element2 = localStorage.getItem('squadElmt2')
-      let element3 = localStorage.getItem('squadElmt3')
-      let element4 = localStorage.getItem('squadElmt4')
-      let element5 = localStorage.getItem('squadElmt5')
-      let element6 = localStorage.getItem('squadElmt6')
-      return [element1, element2, element3, element4, element5, element6]
-  }
-
-    let elemntArr = retriveItems()
-
-    elemntArr.forEach((element) => {
-      if (element != null){
-        pokemonsValue.push(element)
-      }
-    })
   
+
+    let elemntArr = JSON.parse(localStorage.getItem('squad'))
+    
+    for (const key in elemntArr) {
+      pokemonsValue.push(elemntArr[key])
+    }
+    
+    
   
   function addPkmn(){
     if (pkmsCurrent.length == 6){
@@ -40,23 +31,15 @@
     }
   }
 
-  function removeItems(){
-    localStorage.removeItem('squadElmt1')
-    localStorage.removeItem('squadElmt2')
-    localStorage.removeItem('squadElmt3')
-    localStorage.removeItem('squadElmt4')
-    localStorage.removeItem('squadElmt5')
-    localStorage.removeItem('squadElmt6')
-  }
-
   function saveSquad(){
-    removeItems()
+    localStorage.removeItem('squad')
+    let squadObj = {}
     let count = 1 
     pkmsCurrent.forEach((element) => {
-      
-      localStorage.setItem(`squadElmt${count}`, element)
+      squadObj[`squadElmt${count}`] = element
       count++;
     })
+    localStorage.setItem('squad', JSON.stringify(squadObj))
   }
 </script>
 
@@ -89,7 +72,9 @@
 </div>
 
 <div id="btn-remove">
-  <button class="button is-primary is-light" on:click={removeItems}>
+  <button class="button is-primary is-light" on:click={() => {
+    localStorage.removeItem('squad')
+  }}>
     Cancella La tua squadra
   </button>
 </div>
