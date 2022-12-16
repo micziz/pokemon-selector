@@ -7,6 +7,9 @@
   let pokemonsValue;
   let pkmsCurrent = [];
 
+  let aboutTure = "false";
+  let clicked = "false"
+
   pokemons.subscribe(value => {
 		pokemonsValue = value;
 	});
@@ -94,6 +97,32 @@
   </button>
 </div>
 
+
+<div id="info">
+  <button class="button is-primary is-light" on:click={() => {
+    if (clicked == "false"){
+      aboutTure = "true"
+      clicked = "ture"
+    } else {
+      aboutTure = "false"
+      clicked = "false"
+    }
+  }}>
+    Piu Informazioni!
+  </button>
+
+
+</div>
+<div id="info-true">
+  {#if aboutTure == "true"}
+    <h1 class="title is-1">Informazioni!</h1>
+  
+    <p>Questo progetto è stato creato da <a href="https://micziz.dev">micziz</a></p>
+  
+    <a href="https://github.com/micziz/pokemon-selector">Questo proggeto è open source!</a>
+  {/if}
+</div>
+
 <style>
   #form{
     display: flex;
@@ -141,5 +170,19 @@
     justify-content: center;
     align-items: center;  
     margin-top: 2rem;
+  }
+
+  #info{
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  #info-true{
+    text-align: center;    
+    margin-top: 2rem;
+    margin-bottom: 4rem;
   }
 </style>
