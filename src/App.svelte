@@ -17,10 +17,10 @@
     coustumName = prompt('Nome della squadra salvata')
   
     let elemntArr = JSON.parse(localStorage.getItem(coustumName))
-  
     if ( elemntArr !== null ){
       for (const key in elemntArr) {
         pokemonsValue.push(elemntArr[key])
+        pkmsCurrent.push(elemntArr[key])
       }
     }
       
